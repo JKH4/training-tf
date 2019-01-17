@@ -9,7 +9,9 @@ Initialization:
 For each component :
 - update main.tf
 - terraform plan
-- terraform 
+- terraform fmt
+- terraform validate
+- terraform apply
 
 # File tree
 - Repo
