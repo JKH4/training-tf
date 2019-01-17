@@ -6,3 +6,7 @@ variable "region" {
 variable "vpc_cidr_block" {
   default = "172.23.0.0/16"
 }
+
+variable "sn_cidr_block" {
+  default = "172.23.0.0/24"
+}
