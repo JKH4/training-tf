@@ -7,6 +7,7 @@ resource "aws_vpc" "myVPC" {
 
   tags = {
     Name = "myVPC"
+    ENV  = "training-tf"
   }
 }
 
@@ -16,5 +17,15 @@ resource "aws_subnet" "mySubnet" {
 
   tags = {
     Name = "mySubnet"
+    ENV  = "training-tf"
+  }
+}
+
+resource "aws_route_table" "myRouteTable" {
+  vpc_id = "${aws_vpc.myVPC.id}"
+
+  tags = {
+    Name = "mySubnet"
+    ENV  = "training-tf"
   }
 }

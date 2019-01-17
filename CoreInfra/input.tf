@@ -8,5 +8,5 @@ variable "vpc_cidr_block" {
 }
 
 variable "sn_cidr_block" {
-  default = "172.23.0.0/24"
+  default = "172.23.0.0/16"
 }
