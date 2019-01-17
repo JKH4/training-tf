@@ -29,3 +29,12 @@ resource "aws_route_table" "myRouteTable" {
     ENV  = "training-tf"
   }
 }
+
+resource "aws_internet_gateway" "myGateway" {
+  vpc_id = "${aws_vpc.myVPC.id}"
+
+  tags = {
+    Name = "myGateway"
+    ENV  = "training-tf"
+  }
+}
