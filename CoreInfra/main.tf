@@ -11,9 +11,15 @@ resource "aws_vpc" "myVPC" {
   }
 }
 
+data "aws_availability_zones" "available" {}
+
 resource "aws_subnet" "mySubnet" {
+  count      = 2
   vpc_id     = "${aws_vpc.myVPC.id}"
-  cidr_block = "${var.sn_cidr_block}"
+  availability_zone = "${data.aws_availability_zones.available.names[count.index]}"
+  cidr_block = "${element(var.sn_cidr_block_public, count.index)}"
+
+  #   "${var.sn_cidr_block}"
 
   tags = {
     Name = "mySubnet"
@@ -45,6 +51,7 @@ resource "aws_internet_gateway" "myGateway" {
 }
 
 resource "aws_route_table_association" "myRouteAssociation" {
-  subnet_id      = "${aws_subnet.mySubnet.id}"
+  count          = 2
+  subnet_id      = "${element(aws_subnet.mySubnet.*.id, count.index)}"
   route_table_id = "${aws_route_table.myRouteTable.id}"
 }
