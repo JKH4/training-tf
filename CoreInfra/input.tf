@@ -1,12 +1,11 @@
 variable "region" {
-  type    = "string"
-  default = "eu-west-1"
+  type = "string"
 }
 
 variable "vpc_cidr_block" {
-  default = "172.23.0.0/16"
+  type = "string"
 }
 
 variable "sn_cidr_block" {
-  default = "172.23.0.0/16"
+  type = "string"
 }

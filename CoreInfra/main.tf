@@ -12,8 +12,8 @@ resource "aws_vpc" "myVPC" {
 }
 
 resource "aws_subnet" "mySubnet" {
-  cidr_block = "${var.sn_cidr_block}"
   vpc_id     = "${aws_vpc.myVPC.id}"
+  cidr_block = "${var.sn_cidr_block}"
 
   tags = {
     Name = "mySubnet"
@@ -23,6 +23,11 @@ resource "aws_subnet" "mySubnet" {
 
 resource "aws_route_table" "myRouteTable" {
   vpc_id = "${aws_vpc.myVPC.id}"
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = "${aws_internet_gateway.myGateway.id}"
+  }
 
   tags = {
     Name = "mySubnet"
@@ -37,4 +42,9 @@ resource "aws_internet_gateway" "myGateway" {
     Name = "myGateway"
     ENV  = "training-tf"
   }
+}
+
+resource "aws_route_table_association" "myRouteAssociation" {
+  subnet_id      = "${aws_subnet.mySubnet.id}"
+  route_table_id = "${aws_route_table.myRouteTable.id}"
 }
