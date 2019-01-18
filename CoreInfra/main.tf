@@ -2,6 +2,8 @@ provider "aws" {
   region = "${var.region}"
 }
 
+data "aws_availability_zones" "available" {}
+
 resource "aws_vpc" "myVPC" {
   cidr_block = "${var.vpc_cidr_block}"
 
@@ -11,15 +13,11 @@ resource "aws_vpc" "myVPC" {
   }
 }
 
-data "aws_availability_zones" "available" {}
-
 resource "aws_subnet" "mySubnet" {
   count      = 2
   vpc_id     = "${aws_vpc.myVPC.id}"
   availability_zone = "${data.aws_availability_zones.available.names[count.index]}"
   cidr_block = "${element(var.sn_cidr_block_public, count.index)}"
-
-  #   "${var.sn_cidr_block}"
 
   tags = {
     Name = "mySubnet"
